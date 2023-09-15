@@ -12,7 +12,7 @@
 int pIdentifiers(char next, va_list arg)
 {
 	int func;
-	identStruct funct[] = {
+	identifierStruct funct[] = {
 		{"c", print_char},
 		{"s", print_str},
 		{"d", print_int},
