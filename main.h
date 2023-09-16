@@ -7,21 +7,21 @@
 #include <stdlib.h>
 
 int _putchar(char c);
-int print_int(va_list arg);
+int pInt(va_list arg);
 int print_unsigned(va_list arg);
 int _printf(const char *format, ...);
 int pIdentifiers(char next, va_list arg);
-int print_char(va_list arg);
-int print_str(va_list arg);
+int pChar(va_list arg);
+int print_strng(va_list arg);
 int print_percent(void);
 void print_binary(unsigned int n, unsigned int *printed);
-int print_unsignedToBinary(va_list arg);
-int print_oct(va_list arg);
-int print_unsignedIntToHex(unsigned int num, char _case);
+int print_UintToBinary(va_list arg);
+int p_oct(va_list arg);
+int print_UIntToHex(unsigned int num, char _case);
 int print_hex_base(va_list arg, char _case);
-int print_hex(va_list arg);
-int print_HEX(va_list arg);
-int print_STR(va_list arg);
+int pHexad(va_list arg);
+int pHex(va_list arg);
+int print_str(va_list arg);
 
 /**
  * struct identifierStruct - structure definition of a printTypeStruct
