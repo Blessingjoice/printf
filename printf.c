@@ -13,23 +13,23 @@ int pIdentifiers(char next, va_list arg)
 {
 	int func;
 	identifierStruct funct[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"d", print_int},
-		{"i", print_int},
-		{"u", print_unsigned},
-		{"b", print_unsignedToBinary},
-		{"o", print_oct},
-		{"x", print_hex},
-		{"X", print_HEX},
-		{"S", print_STR},
+		{"c", pChar},
+		{"s", print_strng},
+		{"d", pInt},
+		{"i", pInt},
+		{"u", print_Uint},
+		{"b", print_UintToBinary},
+		{"o", p_oct},
+		{"x", pHexad},
+		{"X", pHex},
+		{"S", print_str},
 		{NULL, NULL}
 	};
 
 	for (func = 0; funct[func].indentifier != NULL; func++)
 	{
 		if (funct[func].indentifier[0] == next)
-			return (funct[func].print(arg));
+			return (funct[func].printer(arg));
 	}
 	return (0);
 }
@@ -70,18 +70,18 @@ int _printf(const char *format, ...)
 		if (format[i + 1] == '\0')
 			return (-1);
 
-		printident = printIdentifiers(format[i + 1], arg);
-		if (printident == -1 || printident != 0)
+		print_ident = pIdentifiers(format[i + 1], arg);
+		if (print_ident == -1 || print_ident != 0)
 			i++;
-		if (printident > 0)
-			print_char += printident;
+		if (print_ident > 0)
+			printed_char += print_ident;
 
-		if (printident == 0)
+		if (print_ident == 0)
 		{
 			_putchar('%');
-			print_char++;
+			printed_char++;
 		}
 	}
 	va_end(arg);
-	return (print_char);
+	return (printed_char);
 }

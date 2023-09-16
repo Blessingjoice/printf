@@ -33,7 +33,7 @@ int pInt(va_list arg)
 	for (i = 0; n / divisor > 9; i++, divisor *= 10)
 	;
 
-	for (divisor >= 1; n %= divisor, divisor /= 10, printed_char++)
+	for (; divisor >= 1; n %= divisor, divisor /= 10, printed_char++)
 	{
 		resp = n / divisor;
 		_putchar('0' + resp);
@@ -53,7 +53,7 @@ int print_str(va_list arg)
 	int i;
 	char *strng = va_arg(arg, char*);
 
-	if (*strng == NULL)
+	if (strng == NULL)
 	strng = "(null)";
 	else if (*strng == '\0')
 	return (-1);
@@ -93,7 +93,7 @@ int print_strng(va_list arg)
 
 	for (i = 0; strng[i]; i++)
 		_putchar(strng[i]);
-		return (i);
+	return (i);
 }
 
 /**
@@ -110,7 +110,7 @@ int print_Uint(va_list arg)
 	for (i = 0; n / divisor > 9; i++, divisor *= 10)
 	;
 
-	for (divisor >= 1; n %= divisor, divisor /= 10)
+	for (;divisor >= 1; n %= divisor, divisor /= 10)
 	{
 		resp = n / divisor;
 		_putchar('0' + resp);

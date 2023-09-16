@@ -17,7 +17,7 @@ int printBase(va_list arg, char _case)
 		return (_putchar('0'));
 	digChars = print_UIntToHex(num, _case);
 
-	return (nbrCharacters);
+	return (digChars);
 }
 /**
  * pHexad - prints a hexadecimal in lower case
