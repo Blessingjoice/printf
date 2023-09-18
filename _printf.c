@@ -1,87 +1,110 @@
-#include <stddef.h>
 #include "main.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+void print_buffer(char buffer[], int *buff_ind);
 /**
- * pIdentifiers - prints special characters
- * @next: character after the %
- * @arg: argument for the identifier
- * Return: the number of characters printed.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
-int pIdentifiers(char next, va_list arg)
-{
-	int func;
-	identifierStruct funct[] = {
-		{"c", pChar},
-		{"s", print_strng},
-		{"d", pInt},
-		{"i", pInt},
-		{"u", print_Uint},
-		{"b", print_UintToBinary},
-		{"o", p_oct},
-		{"x", pHexad},
-		{"X", pHex},
-		{"S", print_str},
-		{NULL, NULL}
-	};
-
-	for (func = 0; funct[func].indentifier != NULL; func++)
-	{
-		if (funct[func].indentifier[0] == next)
-			return (funct[func].printer(arg));
-	}
-	return (0);
-}
-/**
- * _printf - copy printf from stdio
- * Desc: produces output according to a format
- *
- * @format: character string composed of zero or more directives
- * Return: the number of characters printed.
- * return -1 for incomplete identifier error.
- */
-
 int _printf(const char *format, ...)
+
 {
-	unsigned int i;
-	int print_ident = 0, printed_char = 0;
-	va_list arg;
 
-	va_start(arg, format);
-	if (format == NULL)
-		return (-1);
+int i, printed = 0, printed_chars = 0;
 
-	for (i = 0; format[i] != '\0'; i++)
-	{
-		if (format[i] != '%')
-		{
-			_putchar(format[i]);
-			printed_char++;
-			continue;
-		}
-		if (format[i + 1] == '%')
-		{
-			_putchar('%');
-			printed_char++;
-			i++;
-			continue;
-		}
-		if (format[i + 1] == '\0')
-			return (-1);
+int flags, width, precision, size, buff_ind = 0;
 
-		print_ident = pIdentifiers(format[i + 1], arg);
-		if (print_ident == -1 || print_ident != 0)
-			i++;
-		if (print_ident > 0)
-			printed_char += print_ident;
+va_list list;
 
-		if (print_ident == 0)
-		{
-			_putchar('%');
-			printed_char++;
-		}
-	}
-	va_end(arg);
-	return (printed_char);
+char buffer[BUFF_SIZE];
+
+if (format == NULL)
+
+return (-1);
+
+va_start(list, format);
+
+for (i = 0; format && format[i] != '\0'; i++)
+
+{
+
+if (format[i] != '%')
+
+{
+
+buffer[buff_ind++] = format[i];
+
+if (buff_ind == BUFF_SIZE)
+
+print_buffer(buffer, &buff_ind);
+
+/* write(1, &format[i], 1);*/
+
+printed_chars++;
+
+}
+
+else
+
+{
+
+print_buffer(buffer, &buff_ind);
+
+flags = get_flags(format, &i);
+
+width = get_width(format, &i, list);
+
+precision = get_precision(format, &i, list);
+
+size = get_size(format, &i);
+
+++i;
+
+printed = handle_print(format, &i, list, buffer,
+
+flags, width, precision, size);
+
+if (printed == -1)
+
+return (-1);
+
+printed_chars += printed;
+
+}
+
+}
+
+
+
+print_buffer(buffer, &buff_ind);
+
+
+
+va_end(list);
+
+
+
+return (printed_chars);
+
+}
+
+
+
+/**
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
+ */
+
+void print_buffer(char buffer[], int *buff_ind)
+
+{
+
+if (*buff_ind > 0)
+
+write(1, &buffer[0], *buff_ind);
+
+
+
+*buff_ind = 0;
+
 }
